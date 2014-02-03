@@ -36,6 +36,8 @@ Calendar.Selector = Object.freeze({
   editEventSaveButton: '#modify-event-view button.save',
   editEventStartDate: '#modify-event-view input[name="startDate"]',
   editEventStartTime: '#modify-event-view input[name="startTime"]',
+  editEventStartDateButton: '#modify-event-view .start-date',
+  editEventStartDateLocale: '#modify-event-view #start-date-locale',
   editEventTitle: '#modify-event-view input[name="title"]',
   editEventDescription: '#modify-event-view textarea[name="description"]',
   eventListSection: '#event-list',
@@ -148,6 +150,7 @@ Calendar.prototype = {
    *   (string) location - event location
    *   (Date) startDate - when event starts
    *   (Date) endDate - when event ends
+   *   (Boolean) [save] - if it should click save button, default to false
    * @return {Event} Created event.
    */
   createEvent: function(opts) {
@@ -174,7 +177,9 @@ Calendar.prototype = {
     });
 
     // Save event.
-    this.waitForElement('editEventSaveButton').click();
+    if (opts.save != null) {
+      this.waitForElement('editEventSaveButton').click();
+    }
 
     // TODO(gareth): Sort out the dates and times here.
     return {
